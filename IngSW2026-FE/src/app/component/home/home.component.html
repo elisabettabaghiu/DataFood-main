@@ -1,0 +1,35 @@
+<div class="home-page">
+  <app-navbar (searchChange)="onSearchChange($event)"></app-navbar>
+
+  <main class="home-layout">
+    <section class="sidebar-area">
+      <app-sidebar
+        [categorie]="categorie"
+        [categoriaSelezionataId]="categoriaSelezionataId"
+        (categoriaSelected)="filterByCategoria($event)"
+      ></app-sidebar>
+    </section>
+
+    <section class="products-area">
+      <header class="products-header">
+        <h2>{{ titoloCatalogo }}</h2>
+        <p>{{ prodotti.length }} prodotti trovati</p>
+      </header>
+
+      <div class="products-grid" *ngIf="prodotti.length > 0; else noProducts">
+        <app-product-card
+          *ngFor="let prodotto of prodotti"
+          [prodotto]="prodotto"
+        ></app-product-card>
+      </div>
+
+      <ng-template #noProducts>
+        <div class="empty-state" role="status" aria-live="polite">
+          <div class="empty-state-icon" aria-hidden="true">🛒</div>
+          <p class="empty-state-title">Nessun prodotto trovato</p>
+          <p class="empty-state-subtitle">Prova a cercare qualcos'altro</p>
+        </div>
+      </ng-template>
+    </section>
+  </main>
+</div>

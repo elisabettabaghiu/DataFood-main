@@ -1,0 +1,33 @@
+<app-navbar (searchChange)="onSearchChange($event)"></app-navbar>
+
+<main class="wishlist-container">
+  <div class="wishlist-header">
+    <h1>La tua lista dei desideri</h1>
+    <p class="item-count">{{ items.length }} {{ items.length === 1 ? 'prodotto' : 'prodotti' }}</p>
+  </div>
+
+  @if (items.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">♡</div>
+      <h2>La tua lista dei desideri è vuota</h2>
+      <p>Aggiungi i tuoi prodotti preferiti cliccando sul cuore nelle schede prodotto.</p>
+      <a routerLink="/" class="browse-button">Esplora il catalogo</a>
+    </div>
+  } @else {
+    <div class="wishlist-grid">
+      @for (prodotto of items; track prodotto.id) {
+        <div class="wishlist-item">
+          <app-product-card [prodotto]="prodotto"></app-product-card>
+          <button
+            class="remove-button"
+            type="button"
+            (click)="removeFromWishlist(prodotto)"
+            aria-label="Rimuovi dalla wishlist"
+          >
+            ✕
+          </button>
+        </div>
+      }
+    </div>
+  }
+</main>

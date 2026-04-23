@@ -1,0 +1,58 @@
+# ===========================
+# FRONTEND (Angular)
+# ===========================
+
+*/node_modules/
+*/.angular/
+*/dist/
+*/tmp/
+*/out-tsc/
+*/bazel-out/
+
+# Angular environments (contiene API URL e config)
+*/src/environments/
+
+# ===========================
+# BACKEND (Spring Boot / Java)
+# ===========================
+
+*/.gradle/
+*/build/
+*/target/
+
+# Java compiled files
+*.class
+
+# ===========================
+# IDE (tutti i progetti)
+# ===========================
+
+.idea/
+*.iml
+*.iws
+.project
+.classpath
+.settings/
+
+.vscode/
+*.sublime-*
+
+# ===========================
+# SYSTEM FILES
+# ===========================
+
+.DS_Store
+Thumbs.db
+
+# ===========================
+# LOGS
+# ===========================
+
+*.log
+
+# ===========================
+# ENVIRONMENT FILES
+# ===========================
+
+.env
+.env.local

@@ -1,0 +1,27 @@
+<aside class="sidebar">
+  <div class="sidebar-title-wrap">
+    <h3>Categorie</h3>
+    <span class="sidebar-separator" aria-hidden="true"></span>
+  </div>
+
+  <button
+    type="button"
+    class="category-button"
+    [class.active]="categoriaSelezionataId === undefined"
+    (click)="resetFiltro()"
+  >
+    <span class="category-emoji" aria-hidden="true">🧺</span>
+    <span>Tutte</span>
+  </button>
+
+  <button
+    *ngFor="let categoria of categorie"
+    type="button"
+    class="category-button"
+    [class.active]="(categoria.id ?? categoria.ID) === categoriaSelezionataId"
+    (click)="selectCategoria(categoria)"
+  >
+    <span class="category-emoji" aria-hidden="true">🥬</span>
+    <span>{{ categoria.nome }}</span>
+  </button>
+</aside>
