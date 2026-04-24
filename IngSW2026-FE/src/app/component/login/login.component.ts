@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
+import { WishlistService } from '../../service/wishlist.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
+    private wishlistService: WishlistService,
     private router: Router
   ) {}
 
@@ -33,6 +35,8 @@ export class LoginComponent {
         console.log('Login ok', user);
         // Se login ok, persistiamo l'utente e torniamo al catalogo.
         this.authService.saveCurrentUser(user);
+        // Ricarica la wishlist dal database per l'utente appena loggato
+        this.wishlistService.loadForCurrentUser();
         this.router.navigateByUrl('/');
       },
       error: (err) => {
