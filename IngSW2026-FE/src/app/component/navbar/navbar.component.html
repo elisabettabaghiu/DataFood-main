@@ -20,6 +20,16 @@
 
     <div class="actions">
       <button
+        *ngIf="currentUser"
+        class="orders-icon-button"
+        type="button"
+        [routerLink]="isOnOrdersPage ? '/' : '/orders'"
+        [attr.aria-label]="isOnOrdersPage ? 'Torna al catalogo' : 'I miei ordini'"
+      >
+        <span class="orders-icon">{{ isOnOrdersPage ? '⬅' : '📦' }}</span>
+      </button>
+
+      <button
         class="cart-icon-button"
         type="button"
         [routerLink]="isOnCartPage ? '/' : '/cart'"

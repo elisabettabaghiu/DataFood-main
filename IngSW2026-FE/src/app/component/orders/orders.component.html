@@ -1,0 +1,49 @@
+<app-navbar (searchChange)="onSearchChange($event)"></app-navbar>
+
+<main class="orders-container">
+  <header class="orders-header">
+    <h1>I miei ordini</h1>
+    <p class="orders-subtitle">Storico checkout salvati nel database</p>
+  </header>
+
+  @if (loading) {
+    <p class="info-message">Caricamento ordini in corso</p>
+  } @else if (errorMessage) {
+    <p class="error-message">{{ errorMessage }}</p>
+  } @else if (orders.length === 0) {
+    <div class="empty-state">
+      <h2>Nessun ordine presente</h2>
+      <p>Quando completi un checkout lo vedrai qui</p>
+      <a routerLink="/cart" class="action-link">Vai al carrello</a>
+    </div>
+  } @else {
+    <div class="orders-list">
+      @for (order of orders; track order.id) {
+        <article class="order-card">
+          <header class="order-card-header">
+            <div>
+              <h3>Ordine effettuato</h3>
+              <p class="order-date">{{ order.data | date:'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+            <div class="order-status">{{ order.status }}</div>
+          </header>
+
+          <div class="order-items">
+            @for (item of order.items; track item.productId) {
+              <div class="order-item-row">
+                <span>{{ item.nome }}</span>
+                <span>x{{ item.quantita }}</span>
+                <span>{{ item.prezzo | number:'1.2-2' }} EUR</span>
+              </div>
+            }
+          </div>
+
+          <footer class="order-footer">
+            <span>Totale</span>
+            <strong>{{ order.totale | number:'1.2-2' }} EUR</strong>
+          </footer>
+        </article>
+      }
+    </div>
+  }
+</main>

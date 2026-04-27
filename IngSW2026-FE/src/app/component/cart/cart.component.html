@@ -47,5 +47,20 @@
       <span>Totale</span>
       <strong>{{ totale | number:'1.2-2' }} EUR</strong>
     </div>
+
+    <div class="checkout-actions">
+      <button type="button" class="checkout-button" [disabled]="checkoutLoading" (click)="checkout()">
+        {{ checkoutLoading ? 'Checkout in corso...' : 'Checkout' }}
+      </button>
+      <a routerLink="/orders" class="orders-link">Vedi i miei ordini</a>
+    </div>
+
+    @if (checkoutSuccessMessage) {
+      <p class="checkout-feedback success">{{ checkoutSuccessMessage }}</p>
+    }
+
+    @if (checkoutErrorMessage) {
+      <p class="checkout-feedback error">{{ checkoutErrorMessage }}</p>
+    }
   }
 </main>

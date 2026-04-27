@@ -10,8 +10,10 @@ import { Utente } from '../dto/utente.model';
 })
 export class AuthService {
 
-  private readonly loginUrl = 'http://localhost:8080/auth/login';
-  private readonly registerUrl = 'http://localhost:8080/auth/register';
+  // Usiamo URL relativi per passare dal proxy Angular e mantenere la sessione
+  private readonly loginUrl = '/api/auth/login';
+  private readonly registerUrl = '/api/auth/register';
+  private readonly logoutUrl = '/api/auth/logout';
   // Chiave unica del localStorage per evitare collisioni con altri dati dell'app.
   private readonly currentUserKey = 'currentUser';
 
@@ -38,7 +40,14 @@ export class AuthService {
   }
 
   logout(): void {
-    // Logout lato frontend: per ora ci basta pulire lo storage locale.
+    // Logout backend: invalida la sessione server
+    this.http.post(this.logoutUrl, {}).subscribe({
+      // Anche se il backend non risponde, lato UI puliamo comunque lo stato locale
+      next: () => {},
+      error: () => {}
+    });
+
+    // Logout frontend: pulizia localStorage
     localStorage.removeItem(this.currentUserKey);
   }
 }

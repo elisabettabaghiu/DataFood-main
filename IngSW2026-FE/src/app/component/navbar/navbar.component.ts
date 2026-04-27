@@ -25,6 +25,8 @@ export class NavbarComponent implements OnInit {
   isOnWishlistPage = false;
   // Flag per determinare se siamo nella pagina carrello
   isOnCartPage = false;
+  // Flag per determinare se siamo nella pagina ordini
+  isOnOrdersPage = false;
 
   private authService = inject(AuthService);
   private wishlistService = inject(WishlistService);
@@ -38,6 +40,7 @@ export class NavbarComponent implements OnInit {
     ).subscribe((event: any) => {
       this.isOnWishlistPage = event.url === '/wishlist';
       this.isOnCartPage = event.url === '/cart';
+      this.isOnOrdersPage = event.url === '/orders';
     });
 
     // Se l'utente è già loggato, riallineiamo la wishlist in alto.
