@@ -12,18 +12,18 @@ import java.util.Optional;
 public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
 
     /**
-     * Find wishlist by user ID.
+        * Cerca la lista desideri tramite id utente.
      */
     Optional<Wishlist> findByUtente_Id(Integer utenteId);
 
     /**
-     * Find wishlist with products by user ID (eager fetch).
+        * Cerca la lista desideri con i prodotti tramite id utente (fetch eager).
      */
     @Query("SELECT w FROM Wishlist w LEFT JOIN FETCH w.prodotti WHERE w.utente.id = :utenteId")
     Optional<Wishlist> findByUtente_IdWithProdotti(@Param("utenteId") Integer utenteId);
 
     /**
-     * Check if a product is in a user's wishlist.
+        * Verifica se un prodotto e presente nella lista desideri dell'utente.
      */
     @Query("SELECT CASE WHEN COUNT(w) > 0 THEN true ELSE false END FROM Wishlist w " +
            "JOIN w.prodotti p WHERE w.utente.id = :utenteId AND p.id = :prodottoId")

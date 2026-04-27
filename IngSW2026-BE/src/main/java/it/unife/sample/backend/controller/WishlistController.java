@@ -17,7 +17,7 @@ public class WishlistController {
     }
 
     /**
-     * Get wishlist for the authenticated user.
+        * Recupera la lista desideri dell'utente autenticato.
      * GET /api/wishlist?utenteId={id}
      */
     @GetMapping
@@ -28,7 +28,7 @@ public class WishlistController {
     }
 
     /**
-     * Add a product to user's wishlist.
+        * Aggiunge un prodotto alla lista desideri dell'utente.
      * POST /api/wishlist?utenteId={id}&prodottoId={prodottoId}
      */
     @PostMapping
@@ -44,7 +44,7 @@ public class WishlistController {
     }
 
     /**
-     * Remove a product from user's wishlist.
+        * Rimuove un prodotto dalla lista desideri dell'utente.
      * DELETE /api/wishlist?utenteId={id}&prodottoId={prodottoId}
      */
     @DeleteMapping
@@ -60,7 +60,7 @@ public class WishlistController {
     }
 
     /**
-     * Toggle product in wishlist (add if not present, remove if present).
+        * Esegue il toggle del prodotto nella lista desideri (aggiunge se assente, rimuove se presente).
      * PUT /api/wishlist/toggle?utenteId={id}&prodottoId={prodottoId}
      */
     @PutMapping("/toggle")
@@ -76,7 +76,7 @@ public class WishlistController {
     }
 
     /**
-     * Check if a product is in user's wishlist.
+        * Verifica se un prodotto e presente nella lista desideri dell'utente.
      * GET /api/wishlist/check?utenteId={id}&prodottoId={prodottoId}
      */
     @GetMapping("/check")
@@ -88,7 +88,7 @@ public class WishlistController {
     }
 
     /**
-     * Clear all products from user's wishlist.
+        * Svuota tutti i prodotti dalla lista desideri dell'utente.
      * DELETE /api/wishlist/clear?utenteId={id}
      */
     @DeleteMapping("/clear")

@@ -33,7 +33,7 @@ public class WishlistService {
     }
 
     /**
-     * Get wishlist for a specific user.
+        * Recupera la lista desideri di uno specifico utente.
      */
     public Optional<WishlistDTO> getWishlistByUtenteId(Integer utenteId) {
         return wishlistRepository.findByUtente_IdWithProdotti(utenteId)
@@ -41,7 +41,7 @@ public class WishlistService {
     }
 
     /**
-     * Add a product to user's wishlist.
+        * Aggiunge un prodotto alla lista desideri dell'utente.
      */
     @Transactional
     public WishlistDTO addProdotto(Integer utenteId, Integer prodottoId) {
@@ -64,7 +64,7 @@ public class WishlistService {
     }
 
     /**
-     * Remove a product from user's wishlist.
+        * Rimuove un prodotto dalla lista desideri dell'utente.
      */
     @Transactional
     public WishlistDTO removeProdotto(Integer utenteId, Integer prodottoId) {
@@ -77,14 +77,14 @@ public class WishlistService {
     }
 
     /**
-     * Check if a product is in user's wishlist.
+        * Verifica se un prodotto e presente nella lista desideri dell'utente.
      */
     public boolean isProdottoInWishlist(Integer utenteId, Integer prodottoId) {
         return wishlistRepository.isProdottoInWishlist(utenteId, prodottoId);
     }
 
     /**
-     * Toggle product in wishlist (add if not present, remove if present).
+        * Esegue il toggle del prodotto (aggiunge se assente, rimuove se presente).
      */
     @Transactional
     public WishlistDTO toggleProdotto(Integer utenteId, Integer prodottoId) {
@@ -96,7 +96,7 @@ public class WishlistService {
     }
 
     /**
-     * Clear all products from user's wishlist.
+        * Svuota tutti i prodotti dalla lista desideri dell'utente.
      */
     @Transactional
     public void clearWishlist(Integer utenteId) {
