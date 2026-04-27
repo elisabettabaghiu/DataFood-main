@@ -64,10 +64,16 @@ export class ProductCardComponent {
       return;
     }
 
+    // Solo gli utenti loggati possono aggiungere prodotti al carrello
+    if (!this.isLoggedIn) {
+      alert('Effettua il login per aggiungere prodotti al carrello');
+      return;
+    }
+
     // Puliamo il messaggio precedente prima di mostrare quello nuovo.
     this.setCartFeedback('', '');
 
-    // Prima aggiunta: il backend crea la riga del prodotto in sessione.
+    // Prima aggiunta, il backend crea la riga del prodotto in sessione
     this.cartService.addToCart(this.prodotto.id).subscribe({
       next: (cart) => {
         if (this.quantity > 1) {
@@ -77,7 +83,7 @@ export class ProductCardComponent {
             return;
           }
 
-          // Aggiorna in un secondo step la quantita totale desiderata.
+          // Aggiorna in un secondo step la quantita totale desiderata
           const targetQuantity = item.quantita + (this.quantity - 1);
           this.cartService.updateQuantity(this.prodotto.id, targetQuantity).subscribe({
             next: () => this.setCartFeedback('Prodotto aggiunto al carrello', 'success'),
