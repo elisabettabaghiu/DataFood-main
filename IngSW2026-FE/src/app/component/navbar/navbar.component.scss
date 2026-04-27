@@ -125,6 +125,22 @@
   background: rgba(255, 255, 255, 0.16);
 }
 
+.register-button {
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0 0.9rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
 .user-greeting {
   min-height: 38px;
   display: inline-flex;

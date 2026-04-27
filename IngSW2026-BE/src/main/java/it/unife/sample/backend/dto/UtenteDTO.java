@@ -7,4 +7,5 @@ public class UtenteDTO {
 	private Integer id;
 	private String email;
 	private String nome;
+	private String cognome;
 }

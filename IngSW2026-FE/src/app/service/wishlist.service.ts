@@ -19,30 +19,30 @@ export class WishlistService {
 
   private readonly apiUrl = '/api/wishlist';
 
-  // Signal reattivo per la lista dei prodotti nella wishlist
+  // Signal reattivo con i prodotti presenti nella lista desideri.
   private _items = signal<Prodotto[]>([]);
 
-  // Signal per tracciare l'utente corrente
+  // Tiene traccia dell'id dell'utente attualmente loggato.
   private _currentUserId = signal<number | null>(null);
 
-  // Signal per tracciare lo stato di caricamento
+  // Indica se stiamo caricando i dati dal backend.
   private _loading = signal<boolean>(false);
 
-  // Computed: lista dei prodotti (solo lettura)
+  // Espone la lista in sola lettura ai componenti.
   readonly items = computed(() => this._items());
 
-  // Computed: count per display rapido
+  // Conteggio rapido degli elementi, utile per badge/navbar.
   readonly count = computed(() => this._items().length);
 
-  // Computed: loading state
+  // Espone lo stato di caricamento in sola lettura.
   readonly loading = computed(() => this._loading());
 
   constructor() {
-    // Carica la wishlist per l'utente corrente se già loggato
+    // All'avvio prova a caricare la lista desideri dell'utente loggato.
     this.loadForCurrentUser();
   }
 
-  // Carica la wishlist per l'utente attualmente loggato dal database
+  // Carica dal database la lista desideri dell'utente corrente.
   loadForCurrentUser(): void {
     const user = this.authService.getCurrentUser();
     if (user) {
@@ -54,7 +54,7 @@ export class WishlistService {
     }
   }
 
-  // Carica la wishlist dal backend
+  // Chiamata HTTP al backend per ottenere la lista desideri.
   private loadFromBackend(userId: number): void {
     this._loading.set(true);
     
@@ -78,16 +78,16 @@ export class WishlistService {
     ).subscribe();
   }
 
-  // Computed: verifica se un prodotto è nella wishlist
+  // Controlla se un prodotto e gia presente nella lista desideri.
   isInWishlist(prodotto: Prodotto): boolean {
     return this._items().some(p => p.id === prodotto.id);
   }
 
-  // Aggiungi o rimuovi prodotto (toggle) - chiamata al backend
+  // Aggiunge o rimuove un prodotto con logica toggle.
   toggle(prodotto: Prodotto): boolean {
     const user = this.authService.getCurrentUser();
     if (!user) {
-      alert('Effettua il login per modificare la wishlist');
+      alert('Effettua il login per modificare la lista desideri');
       return false;
     }
 
@@ -95,19 +95,19 @@ export class WishlistService {
     const exists = currentItems.some(p => p.id === prodotto.id);
 
     if (exists) {
-      // Rimuovi dal backend
+      // Se esiste gia, lo rimuoviamo sia localmente che sul backend.
       this.removeFromBackend(user.id, prodotto.id);
       this._items.set(currentItems.filter(p => p.id !== prodotto.id));
       return false;
     } else {
-      // Aggiungi al backend
+      // Se non esiste, lo aggiungiamo localmente e sul backend.
       this.addToBackend(user.id, prodotto.id);
       this._items.set([...currentItems, prodotto]);
       return true;
     }
   }
 
-  // Aggiungi prodotto al backend
+  // Chiamata POST per aggiungere un prodotto alla lista desideri.
   private addToBackend(utenteId: number, prodottoId: number): void {
     const params = new HttpParams()
       .set('utenteId', utenteId.toString())
@@ -121,7 +121,7 @@ export class WishlistService {
     ).subscribe();
   }
 
-  // Rimuovi prodotto dal backend
+  // Chiamata DELETE per rimuovere un prodotto dalla lista desideri.
   private removeFromBackend(utenteId: number, prodottoId: number): void {
     const params = new HttpParams()
       .set('utenteId', utenteId.toString())
@@ -135,7 +135,7 @@ export class WishlistService {
     ).subscribe();
   }
 
-  // Rimuovi prodotto esplicitamente (usato dalla wishlist page)
+  // Rimozione esplicita usata nella pagina lista desideri.
   remove(prodotto: Prodotto): void {
     const user = this.authService.getCurrentUser();
     if (!user) {
@@ -145,19 +145,18 @@ export class WishlistService {
     const currentItems = this._items();
     this._items.set(currentItems.filter(p => p.id !== prodotto.id));
     
-    // Sincronizza con il backend
+    // Mantiene allineato anche lo stato nel database.
     this.removeFromBackend(user.id, prodotto.id);
   }
 
-  // Svuota completamente la wishlist
+  // Svuota completamente lo stato locale della lista desideri.
   clear(): void {
     this._items.set([]);
   }
 
-  // Pulisci la wishlist (usato al logout) - NON cancella dal DB, preserva i dati
+  // Pulizia al logout: non elimina i dati nel database.
   clearOnLogout(): void {
-    // Non chiamare il backend - i dati restano salvati nel database
-    // Solo pulizia stato locale
+    // Qui puliamo solo lo stato locale in memoria.
     this._currentUserId.set(null);
     this._items.set([]);
   }

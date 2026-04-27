@@ -1,0 +1,11 @@
+<div class="register-page">
+  <div class="register-container">
+    <input type="email" [(ngModel)]="email" placeholder="Email">
+    <input type="password" [(ngModel)]="password" placeholder="Password">
+    <input type="text" [(ngModel)]="nome" placeholder="Nome">
+    <input type="text" [(ngModel)]="cognome" placeholder="Cognome">
+    <button (click)="register()">Registrati</button>
+    <p *ngIf="successMessage" class="register-success">{{ successMessage }}</p>
+    <p *ngIf="errorMessage" class="register-error">{{ errorMessage }}</p>
+  </div>
+</div>
