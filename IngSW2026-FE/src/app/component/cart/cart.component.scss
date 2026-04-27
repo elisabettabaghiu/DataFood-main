@@ -1,0 +1,132 @@
+.cart-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.2rem 2rem;
+}
+
+.cart-header {
+  margin-bottom: 1.2rem;
+}
+
+.cart-header h1 {
+  margin: 0 0 0.3rem;
+  font-size: 1.6rem;
+  color: var(--color-text);
+}
+
+.item-count {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.empty-state {
+  background: var(--color-card);
+  border: 1px solid #e8ece8;
+  border-radius: 16px;
+  padding: 3rem 1.2rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3rem;
+}
+
+.browse-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 20px;
+  background: var(--color-primary);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.cart-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  background: var(--color-card);
+  border: 1px solid #e3ece3;
+  border-radius: 14px;
+  padding: 0.9rem;
+}
+
+.item-main h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.item-price {
+  margin: 0.25rem 0 0;
+  color: var(--color-text-muted);
+}
+
+.item-quantity {
+  display: inline-grid;
+  grid-template-columns: 30px 70px 30px;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.item-quantity button {
+  height: 32px;
+  border: 1px solid #c9dbc9;
+  background: #f7fbf7;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.item-quantity input {
+  height: 32px;
+  border: 1px solid #dbe9db;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.item-subtotal {
+  font-weight: 700;
+  min-width: 95px;
+  text-align: right;
+}
+
+.remove-button {
+  border: 1px solid #e3ece3;
+  background: #ffffff;
+  color: var(--color-text);
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+}
+
+.cart-summary {
+  margin-top: 1rem;
+  margin-left: auto;
+  width: min(100%, 300px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #dbe9db;
+  border-radius: 12px;
+  background: #f9fcf9;
+  padding: 0.9rem 1rem;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 780px) {
+  .cart-item {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .item-subtotal {
+    text-align: left;
+  }
+}

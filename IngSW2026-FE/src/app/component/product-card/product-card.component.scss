@@ -136,6 +136,27 @@ h4 {
   opacity: 0.5;
 }
 
+.cart-feedback {
+  margin: 0.05rem 0 0;
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.cart-feedback.success {
+  background: rgba(46, 125, 50, 0.1);
+  color: #1f6b25;
+  border: 1px solid rgba(46, 125, 50, 0.18);
+}
+
+.cart-feedback.error {
+  background: rgba(198, 40, 40, 0.08);
+  color: #a82222;
+  border: 1px solid rgba(198, 40, 40, 0.18);
+}
+
 @media (max-width: 900px) {
   .product-card {
     padding: 0.65rem;

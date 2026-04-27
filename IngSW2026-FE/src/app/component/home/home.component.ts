@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Carica dati iniziali della homepage catalogo.
+    // Carico i dati iniziali della homepage del catalogo
     this.loadProdotti();
     this.loadCategorie();
   }
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
   filterByCategoria(id: number | undefined): void {
-    // Guardia importante: evita chiamate con id undefined.
+    // Controllo importante per evitare chiamate con id undefined
     if (id === undefined) {
       this.categoriaSelezionataId = undefined;
       this.applyCurrentFilters();
@@ -57,13 +57,13 @@ export class HomeComponent implements OnInit {
   }
 
   onSearchChange(value: string): void {
-    // Aggiorna il testo della ricerca dalla navbar.
+    // Aggiorno il testo della ricerca dalla navbar
     this.searchTerm = value;
     this.applyCurrentFilters();
   }
 
   private applyCurrentFilters(): void {
-    // Applica in cascata i filtri correnti (categoria + ricerca testuale).
+    // Applico in cascata i filtri correnti categoria più ricerca testuale
     const normalizedSearch = this.searchTerm.trim();
 
     if (this.categoriaSelezionataId === undefined && normalizedSearch.length === 0) {
@@ -72,14 +72,14 @@ export class HomeComponent implements OnInit {
     }
 
     if (this.categoriaSelezionataId !== undefined) {
-      // Se e selezionata una categoria, prima filtriamo lato backend per categoria.
+      // Se è selezionata una categoria, filtro prima lato backend per categoria
       this.productService.getByCategoria(this.categoriaSelezionataId).subscribe((filteredByCategory) => {
         if (normalizedSearch.length === 0) {
           this.prodotti = filteredByCategory;
           return;
         }
 
-        // Poi rifiniamo lato frontend per testo, senza una seconda chiamata HTTP.
+        // Poi rifinisco lato frontend per testo senza fare una seconda chiamata HTTP
         const lowerSearch = normalizedSearch.toLowerCase();
         this.prodotti = filteredByCategory.filter((prodotto) =>
           prodotto.nome.toLowerCase().includes(lowerSearch)

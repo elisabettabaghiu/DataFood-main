@@ -30,7 +30,7 @@ export class RegisterComponent {
     this.successMessage = '';
     this.errorMessage = '';
 
-    // Evita chiamate HTTP con campi mancanti o vuoti.
+    // Evito chiamate HTTP con campi mancanti o vuoti
     if (!this.email || !this.password || !this.nome || !this.cognome) {
       this.errorMessage = 'Compila tutti i campi prima di registrarti.';
       return;
@@ -46,11 +46,11 @@ export class RegisterComponent {
         console.log('Registrazione ok', user);
         this.successMessage = 'Registrazione completata con successo.';
         this.errorMessage = '';
-        // Come nel login: salvo l'utente nel localStorage cosi risulta subito loggato.
+        // Come nel login, salvo l'utente nel localStorage cosi risulta subito loggato
         this.authService.saveCurrentUser(user);
-        // Aggiorno subito la lista desideri in base al nuovo utente.
+        // Aggiorno subito la lista desideri in base al nuovo utente
         this.wishlistService.loadForCurrentUser();
-        // Dopo registrazione riuscita torno alla homepage.
+        // Dopo la registrazione riuscita torno alla homepage
         this.router.navigateByUrl('/');
       },
       error: (err) => {

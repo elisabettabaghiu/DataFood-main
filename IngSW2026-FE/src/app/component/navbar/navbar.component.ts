@@ -5,6 +5,7 @@ import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../service/auth.service';
 import { WishlistService } from '../../service/wishlist.service';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,35 +17,46 @@ import { WishlistService } from '../../service/wishlist.service';
 export class NavbarComponent implements OnInit {
   @Output() searchChange = new EventEmitter<string>();
 
+  // Testo della ricerca nella barra in alto.
   searchText = '';
   // Flag UI locale: quando true mostriamo i pulsanti di conferma logout.
   logoutConfirmationVisible = false;
   // Flag per determinare se siamo nella pagina wishlist
   isOnWishlistPage = false;
+  // Flag per determinare se siamo nella pagina carrello
+  isOnCartPage = false;
 
   private authService = inject(AuthService);
   private wishlistService = inject(WishlistService);
+  private cartService = inject(CartService);
   private router = inject(Router);
 
   ngOnInit(): void {
-    // Monitora i cambiamenti di rotta per determinare se siamo nella wishlist
+    // Ascoltiamo i cambi di pagina per capire dove siamo.
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.isOnWishlistPage = event.url === '/wishlist';
+      this.isOnCartPage = event.url === '/cart';
     });
 
-    // Carica la wishlist per l'utente corrente se già loggato
+    // Se l'utente è già loggato, riallineiamo la wishlist in alto.
     this.wishlistService.loadForCurrentUser();
   }
 
   get currentUser() {
-    // Lo leggiamo dal service cosi tutta la logica di persistenza resta centralizzata.
+    // Recuperiamo l'utente loggato dal localStorage.
     return this.authService.getCurrentUser();
   }
 
   get wishlistCount(): number {
+    // Numero elementi presenti nella wishlist.
     return this.wishlistService.count();
+  }
+
+  get cartCount(): number {
+    // Numero totale di pezzi nel carrello.
+    return this.cartService.count();
   }
 
   onSearchInput(): void {
@@ -52,18 +64,19 @@ export class NavbarComponent implements OnInit {
   }
 
   requestLogout(): void {
-    // Primo click su logout: non usciamo subito, chiediamo conferma.
+    // Primo click: chiediamo conferma prima di uscire.
     this.logoutConfirmationVisible = true;
   }
 
   cancelLogout(): void {
-    // Se annulla, torniamo alla navbar compatta senza perdere utente.
+    // Se annulla, chiudiamo solo il popup.
     this.logoutConfirmationVisible = false;
   }
 
   confirmLogout(): void {
-    // Logout confermato: pulizia stato wishlist e redirect al catalogo.
+    // Logout confermato: svuotiamo gli stati locali e torniamo al catalogo.
     this.wishlistService.clearOnLogout();
+    this.cartService.clearOnLogout().subscribe();
     this.authService.logout();
     this.logoutConfirmationVisible = false;
     this.router.navigateByUrl('/');

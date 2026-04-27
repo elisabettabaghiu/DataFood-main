@@ -1,0 +1,51 @@
+<app-navbar (searchChange)="onSearchChange($event)"></app-navbar>
+
+<main class="cart-container">
+  <div class="cart-header">
+    <h1>Il tuo carrello</h1>
+    <p class="item-count">{{ items.length }} {{ items.length === 1 ? 'prodotto diverso' : 'prodotti diversi' }}</p>
+  </div>
+
+  @if (items.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🛒</div>
+      <h2>Il carrello è vuoto</h2>
+      <p>Aggiungi prodotti dal catalogo per iniziare il tuo ordine.</p>
+      <a routerLink="/" class="browse-button">Torna al catalogo</a>
+    </div>
+  } @else {
+    <div class="cart-list">
+      @for (item of items; track item.productId) {
+        <article class="cart-item">
+          <div class="item-main">
+            <h3>{{ item.nome }}</h3>
+            <p class="item-price">{{ item.prezzo | number:'1.2-2' }} EUR</p>
+          </div>
+
+          <div class="item-quantity">
+            <button type="button" (click)="decrement(item)" aria-label="Riduci quantita">-</button>
+            <input
+              type="number"
+              min="0"
+              [ngModel]="item.quantita"
+              (ngModelChange)="updateFromInput(item, $event)"
+              aria-label="Quantita"
+            />
+            <button type="button" (click)="increment(item)" aria-label="Aumenta quantita">+</button>
+          </div>
+
+          <div class="item-subtotal">
+            {{ item.prezzo * item.quantita | number:'1.2-2' }} EUR
+          </div>
+
+          <button class="remove-button" type="button" (click)="remove(item)">Rimuovi</button>
+        </article>
+      }
+    </div>
+
+    <div class="cart-summary">
+      <span>Totale</span>
+      <strong>{{ totale | number:'1.2-2' }} EUR</strong>
+    </div>
+  }
+</main>

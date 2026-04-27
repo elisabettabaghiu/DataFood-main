@@ -19,6 +19,16 @@
     </div>
 
     <div class="actions">
+      <button
+        class="cart-icon-button"
+        type="button"
+        [routerLink]="isOnCartPage ? '/' : '/cart'"
+        [attr.aria-label]="isOnCartPage ? 'Torna al catalogo' : 'Carrello (' + cartCount + ' prodotti)'"
+      >
+        <span class="cart-icon">{{ isOnCartPage ? '⬅' : '🛒' }}</span>
+        <span *ngIf="!isOnCartPage && cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+      </button>
+
       <!-- Icona wishlist: se siamo nella wishlist, torna al catalogo -->
       <button
         *ngIf="currentUser"

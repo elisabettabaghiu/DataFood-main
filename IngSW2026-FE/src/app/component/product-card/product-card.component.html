@@ -31,4 +31,10 @@
   <button type="button" class="cart-button" [disabled]="quantity === 0" (click)="addToCart()">
     Aggiungi al carrello
   </button>
+
+  @if (cartFeedbackMessage) {
+    <p class="cart-feedback" [class.success]="cartFeedbackType === 'success'" [class.error]="cartFeedbackType === 'error'">
+      {{ cartFeedbackMessage }}
+    </p>
+  }
 </article>

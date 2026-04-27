@@ -31,6 +31,6 @@ export class WishlistComponent {
   }
 
   onSearchChange(value: string): void {
-    // La lista desideri al momento non prevede la ricerca.
+    // La lista desideri al momento non prevede la ricerca
   }
 }

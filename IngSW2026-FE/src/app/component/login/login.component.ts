@@ -22,7 +22,7 @@ export class LoginComponent {
   ) {}
 
   login(): void {
-    // Guardia base per evitare chiamate HTTP con campi vuoti.
+    // Controllo base per evitare chiamate HTTP con campi vuoti
     if (!this.email || !this.password) {
       return;
     }
@@ -33,14 +33,14 @@ export class LoginComponent {
     }).subscribe({
       next: (user) => {
         console.log('Login ok', user);
-        // Se login ok, persistiamo l'utente e torniamo al catalogo.
+        // Se il login va bene, salvo l'utente e torno al catalogo
         this.authService.saveCurrentUser(user);
-        // Ricarica la wishlist dal database per l'utente appena loggato
+        // Ricarico la wishlist dal database per l'utente appena loggato
         this.wishlistService.loadForCurrentUser();
         this.router.navigateByUrl('/');
       },
       error: (err) => {
-        // Qui teniamo il log semplice per debug da console durante sviluppo.
+        // Tengo il log semplice per debug da console durante sviluppo
         console.error('Errore login', err);
       }
     });
